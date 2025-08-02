@@ -21,15 +21,15 @@ for file in "$@"; do
     if [ ! -f "$file" ]; then
         continue
     fi
-    
+
     # Skip binary files
     if file --mime "$file" | grep -q "charset=binary"; then
         continue
     fi
-    
+
     # Get file extension
     ext="${file##*.}"
-    
+
     # Check if this is a markdown file that should preserve line breaks
     preserve_linebreaks=false
     if [ -n "$markdown_exts" ]; then
@@ -41,10 +41,10 @@ for file in "$@"; do
             fi
         done
     fi
-    
+
     # Create temp file
     temp_file=$(mktemp)
-    
+
     # Remove trailing whitespace
     if [ "$preserve_linebreaks" = true ]; then
         # For markdown files: preserve two spaces at end of line, remove other trailing whitespace
@@ -53,7 +53,7 @@ for file in "$@"; do
         # For other files: remove all trailing whitespace
         sed 's/[[:space:]]*$//' "$file" > "$temp_file"
     fi
-    
+
     # Check if file was modified
     if ! cmp -s "$file" "$temp_file"; then
         mv "$temp_file" "$file"

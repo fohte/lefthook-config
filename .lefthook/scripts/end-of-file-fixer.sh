@@ -16,12 +16,12 @@ for file in "$@"; do
     if [ ! -f "$file" ]; then
         continue
     fi
-    
+
     # Skip binary files
     if file --mime "$file" | grep -q "charset=binary"; then
         continue
     fi
-    
+
     # Check if file ends with newline
     if [ -s "$file" ] && [ "$(tail -c 1 "$file" | wc -l)" -eq 0 ]; then
         # Add newline to end of file

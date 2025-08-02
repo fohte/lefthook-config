@@ -4,12 +4,12 @@
 pre-commit:
   commands:
     end-of-file-fixer:
-      run: .lefthook/scripts/end-of-file-fixer.sh {staged_files}
+      run: bash .lefthook/scripts/end-of-file-fixer.sh {staged_files}
       glob: "*"
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
-      
+
     trailing-whitespace:
-      run: .lefthook/scripts/trailing-whitespace.sh {staged_files}
+      run: bash .lefthook/scripts/trailing-whitespace.sh {staged_files}
       glob: "*"
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
       # For markdown files, preserve line breaks (two spaces at end of line)
