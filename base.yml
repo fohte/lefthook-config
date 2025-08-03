@@ -3,15 +3,8 @@
 
 pre-commit:
   commands:
-    end-of-file-fixer:
-      run: .lefthook/scripts/end-of-file-fixer.sh {staged_files}
+    editorconfig:
+      # Fix files according to .editorconfig settings using eclint
+      run: npx -y eclint fix {staged_files} && git add {staged_files}
       glob: "*"
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
-
-    trailing-whitespace:
-      run: .lefthook/scripts/trailing-whitespace.sh {staged_files}
-      glob: "*"
-      exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
-      # For markdown files, preserve line breaks (two spaces at end of line)
-      env:
-        MARKDOWN_LINEBREAK_EXT: "md,mdx"

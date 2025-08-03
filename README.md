@@ -10,7 +10,7 @@
 remotes:
   - git_url: https://github.com/fohte/lefthook-config
     configs:
-      - base.yml
+    - base.yml
 ```
 
 ## 提供される hooks
@@ -19,13 +19,20 @@ remotes:
 
 言語に依存しない基本的な hooks:
 
-- **end-of-file-fixer**: ファイル末尾に改行を確保
-- **trailing-whitespace**: 末尾の空白を削除（Markdown の改行は保持）
+- **editorconfig**: `.editorconfig` の設定に基づいてファイルを修正
+  - ファイル末尾に改行を確保 (`insert_final_newline`)
+  - 末尾の空白を削除 (`trim_trailing_whitespace`)
+  - Markdown ファイルでは改行用の空白は保持
 
-## スクリプトについて
+## 必要なツール
 
-各 hook の実装は `.lefthook/scripts/` 以下のシェルスクリプトで行われています。
-これらのスクリプトは自動的にダウンロードされ、実行されます。
+この設定は `npx` を使用して自動的に `eclint` を実行します。
+追加のインストールは不要です。
+
+## EditorConfig 設定
+
+各リポジトリに `.editorconfig` ファイルが必要です。
+このリポジトリの `.editorconfig` を参考にしてください。
 
 ## カスタマイズ
 
@@ -34,6 +41,6 @@ remotes:
 ```yaml
 pre-commit:
   commands:
-    trailing-whitespace:
-      skip: true  # この hook をスキップ
+    editorconfig:
+    skip: true  # この hook をスキップ
 ```
