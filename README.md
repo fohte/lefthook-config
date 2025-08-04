@@ -27,12 +27,12 @@ Language-agnostic hooks for basic code quality:
 ## Requirements
 
 This configuration uses `bunx` to automatically run `eclint`.
-Bun must be installed on your system.
+Bun must be installed on your system. You can find installation instructions [here](https://bun.sh/docs/installation).
 
 ## EditorConfig Setup
 
 Each repository needs an `.editorconfig` file.
-See this repository's `.editorconfig` for an example.
+See this repository's [`.editorconfig`](./.editorconfig) for an example.
 
 ## Customization
 
