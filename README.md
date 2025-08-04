@@ -1,6 +1,6 @@
-# Lefthook Common Configuration
+# fohte/lecthook-config
 
-Common Lefthook configuration for consistent code quality across repositories.
+[@fohte](https://github.com/fohte)'s Lefthook configuration for consistent code quality across repositories.
 
 ## Usage
 
