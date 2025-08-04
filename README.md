@@ -1,46 +1,46 @@
 # Lefthook Common Configuration
 
-共通の Lefthook 設定を提供するリポジトリです。
+Common Lefthook configuration for consistent code quality across repositories.
 
-## 使い方
+## Usage
 
-各リポジトリの `lefthook.yml` に以下を追加:
+Add the following to your `lefthook.yml`:
 
 ```yaml
 remotes:
   - git_url: https://github.com/fohte/lefthook-config
     configs:
-    - base.yml
+      - base.yml
 ```
 
-## 提供される hooks
+## Available Hooks
 
 ### base.yml
 
-言語に依存しない基本的な hooks:
+Language-agnostic hooks for basic code quality:
 
-- **editorconfig**: `.editorconfig` の設定に基づいてファイルを修正
-  - ファイル末尾に改行を確保 (`insert_final_newline`)
-  - 末尾の空白を削除 (`trim_trailing_whitespace`)
-  - Markdown ファイルでは改行用の空白は保持
+- **editorconfig**: Fixes files according to `.editorconfig` settings
+  - Ensures files end with a newline (`insert_final_newline`)
+  - Removes trailing whitespace (`trim_trailing_whitespace`)
+  - Preserves line-break spaces in Markdown files
 
-## 必要なツール
+## Requirements
 
-この設定は `bunx` を使用して自動的に `eclint` を実行します。
-追加のインストールは不要です（Bun が必要です）。
+This configuration uses `bunx` to automatically run `eclint`.
+Bun must be installed on your system.
 
-## EditorConfig 設定
+## EditorConfig Setup
 
-各リポジトリに `.editorconfig` ファイルが必要です。
-このリポジトリの `.editorconfig` を参考にしてください。
+Each repository needs an `.editorconfig` file.
+See this repository's `.editorconfig` for an example.
 
-## カスタマイズ
+## Customization
 
-ローカルで設定を上書きしたい場合は、`lefthook-local.yml` を使用してください:
+To override settings locally, use `lefthook-local.yml`:
 
 ```yaml
 pre-commit:
   commands:
     editorconfig:
-    skip: true  # この hook をスキップ
+      skip: true  # Skip this hook
 ```
