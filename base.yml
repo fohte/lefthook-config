@@ -5,6 +5,6 @@ pre-commit:
   commands:
     editorconfig:
       # Fix files according to .editorconfig settings using eclint
-      run: npx -y eclint fix {staged_files} && git add {staged_files}
+      run: bunx --bun eclint fix {staged_files} && git add {staged_files}
       glob: "*"
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
