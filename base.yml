@@ -1,0 +1,10 @@
+# Base configuration for language-agnostic hooks
+# These hooks can be used across any project regardless of programming language
+
+pre-commit:
+  commands:
+    editorconfig:
+      # Fix files according to .editorconfig settings using eclint
+      run: bunx --bun eclint fix {staged_files} && git add {staged_files}
+      glob: "*"
+      exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"

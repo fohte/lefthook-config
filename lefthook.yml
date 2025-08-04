@@ -1,0 +1,7 @@
+# Lefthook configuration for this repository
+# Using our own base configuration
+
+extends:
+  - base.yml
+
+# Additional hooks specific to this repository can be added here
