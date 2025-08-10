@@ -5,27 +5,6 @@ pre-commit:
   commands:
     format:
       # Simple formatting fixes: remove trailing whitespace and ensure final newline
-      # No external dependencies required - pure POSIX shell
-      run: |
-        # Use the simple format fix script
-        script_path="./scripts/format-fix.sh"
-
-        # Check if script exists locally
-        if [ ! -f "$script_path" ]; then
-          # Try to download it from the repository
-          mkdir -p ./scripts
-          curl -sL https://raw.githubusercontent.com/fohte/lefthook-config/main/scripts/format-fix.sh -o "$script_path"
-          chmod +x "$script_path"
-        fi
-
-        if [ -f "$script_path" ]; then
-          # Process each staged file
-          "$script_path" {staged_files}
-          # Re-add modified files
-          git add {staged_files}
-        else
-          echo "Warning: Could not find or download format-fix.sh"
-          exit 1
-        fi
+      run: ./scripts/format-fix.sh {staged_files} && git add {staged_files}
       glob: "*"
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"

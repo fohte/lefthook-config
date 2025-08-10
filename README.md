@@ -22,8 +22,8 @@ Language-agnostic hooks for basic code quality:
 - **format**: Simple formatting fixes
   - Removes trailing whitespace from all lines
   - Ensures files end with a newline
-  - Pure POSIX shell script (no dependencies)
-  - Automatically skips binary files
+  - Pure bash script (no dependencies)
+  - Binary files excluded via lefthook configuration
 
 ## Why This Approach?
 
@@ -34,7 +34,7 @@ This minimal approach focuses on the most common and universally applicable form
 
 Unlike full EditorConfig implementations, this approach:
 - **No configuration needed** - Works the same for all files
-- **No runtime dependencies** - Just POSIX shell
+- **No runtime dependencies** - Just bash
 - **Fast** - Simple sed operations, no parsing required
 - **Predictable** - Same behavior across all projects
 

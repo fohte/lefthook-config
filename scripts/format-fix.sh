@@ -1,9 +1,9 @@
-#!/bin/sh
-# Simple POSIX-compliant script to fix common formatting issues
+#!/usr/bin/env bash
+# Simple formatting script
 # - Removes trailing whitespace from lines
 # - Ensures files end with a single newline
 
-set -e
+set -euo pipefail
 
 # Process a single file
 process_file() {
@@ -14,13 +14,6 @@ process_file() {
     echo "ERROR: File not found: $file" >&2
     return 1
   fi
-
-  # Skip binary files and specific extensions
-  case "$file" in
-    *.png|*.jpg|*.jpeg|*.gif|*.ico|*.pdf|*.svg|*.woff|*.woff2|*.ttf|*.eot)
-      return 0
-      ;;
-  esac
 
   # Remove trailing whitespace from all lines
   sed -i.bak 's/[[:space:]]*$//' "$file" && rm -f "$file.bak"
