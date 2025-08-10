@@ -1,15 +1,32 @@
 # fohte/lefthook-config
 
-Minimal lefthook configuration for code formatting.
+[@fohte](https://github.com/fohte)'s shared Lefthook configuration.
 
 ## Usage
 
+1. Install lefthook globally:
+```bash
+# Using mise (global)
+mise use -g lefthook
+
+# or using Homebrew
+brew install lefthook
+
+# or using npm
+npm install -g lefthook
+```
+
+2. Create `lefthook.yml` in your repository:
 ```yaml
-# lefthook.yml
 remotes:
   - git_url: https://github.com/fohte/lefthook-config
     configs:
       - base.yml
+```
+
+3. Install git hooks:
+```bash
+lefthook install
 ```
 
 ## What it does
@@ -23,3 +40,4 @@ remotes:
 
 - Bash
 - Git
+- Lefthook
