@@ -7,7 +7,7 @@
 1. Install lefthook globally:
 ```bash
 # Using mise (global)
-mise use -g lefthook
+mise use -g lefthook --pin
 
 # or using Homebrew
 brew install lefthook
