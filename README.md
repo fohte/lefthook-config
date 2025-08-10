@@ -35,9 +35,3 @@ lefthook install
 - Ensures files end with a newline
 - Runs automatically on `git commit`
 - Skips binary files (images, fonts, etc.)
-
-## Requirements
-
-- Bash
-- Git
-- Lefthook
