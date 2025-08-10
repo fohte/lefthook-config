@@ -19,78 +19,42 @@ remotes:
 
 Language-agnostic hooks for basic code quality:
 
-- **editorconfig**: Fixes files according to `.editorconfig` settings
-  - Uses a pure POSIX shell script implementation (no external dependencies)
-  - Ensures files end with a newline (`insert_final_newline`)
-  - Removes trailing whitespace (`trim_trailing_whitespace`)
-  - Converts line endings (`end_of_line`)
-  - Converts indentation style (`indent_style`, `indent_size`)
-  - Preserves line-break spaces in Markdown files
+- **format**: Simple formatting fixes
+  - Removes trailing whitespace from all lines
+  - Ensures files end with a newline
+  - Pure POSIX shell script (no dependencies)
+  - Automatically skips binary files
 
-## EditorConfig Implementation
+## Why This Approach?
 
-This configuration uses a **pure shell script** implementation of EditorConfig, eliminating the need for Node.js, Bun, or any other runtime dependencies.
+This minimal approach focuses on the most common and universally applicable formatting rules:
 
-### Features
+1. **Trailing whitespace removal** - Trailing spaces are almost never intentional and can cause issues with diffs
+2. **Final newline** - POSIX standard requires text files to end with a newline
 
-- **Zero dependencies**: Works with just POSIX shell (sh)
-- **Automatic download**: Script is downloaded on first use if not present
-- **Full EditorConfig support**: 
-  - `trim_trailing_whitespace`
-  - `insert_final_newline`
-  - `end_of_line` (lf, crlf, cr)
-  - `indent_style` (space, tab)
-  - `indent_size`
-  - Pattern matching for file-specific rules
+Unlike full EditorConfig implementations, this approach:
+- **No configuration needed** - Works the same for all files
+- **No runtime dependencies** - Just POSIX shell
+- **Fast** - Simple sed operations, no parsing required
+- **Predictable** - Same behavior across all projects
 
-### Manual Installation
-
-If you prefer to include the script in your repository:
+## Manual Testing
 
 ```bash
-mkdir -p scripts
-curl -o scripts/editorconfig-fix.sh \
-  https://raw.githubusercontent.com/fohte/lefthook-config/main/scripts/editorconfig-fix.sh
-chmod +x scripts/editorconfig-fix.sh
+# Test the script directly
+./scripts/format-fix.sh file1.txt file2.js
+
+# Check what would be changed
+diff file.txt <(./scripts/format-fix.sh file.txt && cat file.txt)
 ```
-
-### Testing the Script
-
-You can test the script manually:
-
-```bash
-# Apply EditorConfig settings to specific files
-./scripts/editorconfig-fix.sh file1.txt file2.js
-
-# Dry run mode (show what would be changed)
-./scripts/editorconfig-fix.sh --dry-run file.txt
-
-# Debug mode (verbose output)
-DEBUG=true ./scripts/editorconfig-fix.sh file.txt
-```
-
-## EditorConfig Setup
-
-Each repository needs an `.editorconfig` file.
-See this repository's [`.editorconfig`](./.editorconfig) for an example.
 
 ## Customization
 
-To override settings locally, use `lefthook-local.yml`:
+To skip this hook locally, use `lefthook-local.yml`:
 
 ```yaml
 pre-commit:
   commands:
-    editorconfig:
-      skip: true  # Skip this hook
+    format:
+      skip: true  # Skip formatting
 ```
-
-## Why Shell Script?
-
-Unlike the original `eclint` implementation that requires Node.js/Bun, this pure shell script approach:
-
-- **Works everywhere**: No need to install language runtimes
-- **Fast startup**: No runtime initialization overhead
-- **Minimal footprint**: Single ~400 line shell script
-- **Easy to audit**: Readable POSIX shell code
-- **Self-contained**: Can be embedded directly in your project
