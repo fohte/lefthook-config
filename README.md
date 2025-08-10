@@ -29,9 +29,10 @@ remotes:
 lefthook install
 ```
 
-## What it does
+## Available configurations
 
-- Removes trailing whitespace from lines
-- Ensures files end with a newline
-- Runs automatically on `git commit`
-- Skips binary files (images, fonts, etc.)
+### base.yml
+- **pre-commit/format**: Automatic code formatting
+  - Removes trailing whitespace
+  - Ensures final newline
+  - Excludes: `*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}`
