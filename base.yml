@@ -11,8 +11,7 @@ pre-commit:
 
     shfmt:
       # Format shell scripts with shfmt
-      # Using -i 2 for 2-space indentation, -ci for indented case statements, -bn for binary operators on new line
-      run: shfmt -w -i 2 -ci -bn {staged_files} && git add {staged_files}
+      run: shfmt -w {staged_files} && git add {staged_files}
       glob: "*.{sh,bash}"
 
     shellcheck:
