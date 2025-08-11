@@ -1,11 +1,22 @@
-# fohte/lecthook-config
+# fohte/lefthook-config
 
-[@fohte](https://github.com/fohte)'s Lefthook configuration for consistent code quality across repositories.
+[@fohte](https://github.com/fohte)'s shared Lefthook configuration.
 
 ## Usage
 
-Add the following to your `lefthook.yml`:
+1. Install lefthook globally:
+```bash
+# Using mise (global)
+mise use -g lefthook --pin
 
+# or using Homebrew
+brew install lefthook
+
+# or using npm
+npm install -g lefthook
+```
+
+2. Create `lefthook.yml` in your repository:
 ```yaml
 remotes:
   - git_url: https://github.com/fohte/lefthook-config
@@ -13,34 +24,15 @@ remotes:
       - base.yml
 ```
 
-## Available Hooks
+3. Install git hooks:
+```bash
+lefthook install
+```
+
+## Available configurations
 
 ### base.yml
-
-Language-agnostic hooks for basic code quality:
-
-- **editorconfig**: Fixes files according to `.editorconfig` settings
-  - Ensures files end with a newline (`insert_final_newline`)
-  - Removes trailing whitespace (`trim_trailing_whitespace`)
-  - Preserves line-break spaces in Markdown files
-
-## Requirements
-
-This configuration uses `bunx` to automatically run `eclint`.
-Bun must be installed on your system. You can find installation instructions [here](https://bun.sh/docs/installation).
-
-## EditorConfig Setup
-
-Each repository needs an `.editorconfig` file.
-See this repository's [`.editorconfig`](./.editorconfig) for an example.
-
-## Customization
-
-To override settings locally, use `lefthook-local.yml`:
-
-```yaml
-pre-commit:
-  commands:
-    editorconfig:
-      skip: true  # Skip this hook
-```
+- **pre-commit/format**: Automatic code formatting
+  - Removes trailing whitespace
+  - Ensures final newline
+  - Excludes: `*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}`
