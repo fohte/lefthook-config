@@ -34,7 +34,11 @@ process_file() {
         print lines[i]
       }
     }
-  ' "$file" > "$temp_file" && mv "$temp_file" "$file"
+  ' "$file" > "$temp_file"
+
+  # Write back to original file
+  cat "$temp_file" > "$file"
+  rm -f "$temp_file"
 }
 
 # Main
