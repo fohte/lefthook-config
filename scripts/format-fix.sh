@@ -17,6 +17,7 @@ process_file() {
   # Create temporary file and ensure it's cleaned up
   local temp_file
   temp_file=$(mktemp)
+  # shellcheck disable=SC2064 # We want $temp_file expanded now, not when trap executes
   trap "rm -f '$temp_file'" RETURN
 
   # Remove trailing whitespace and normalize to single trailing newline
