@@ -1,0 +1,58 @@
+name: Validate Config
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jdx/mise-action@v2
+        with:
+          install: true
+
+      - name: Validate lefthook configuration
+        run: |
+          # Validate the main lefthook.yml file
+          lefthook dump --json > /dev/null
+          echo "✅ lefthook.yml is valid"
+
+      - name: Check YAML syntax
+        run: |
+          # Validate all YAML files
+          for file in *.yml .github/workflows/*.yml; do
+            if [ -f "$file" ]; then
+              echo "Validating $file..."
+              yq eval '.' "$file" > /dev/null || exit 1
+              echo "✅ $file is valid"
+            fi
+          done
+
+      - name: Test format script
+        run: |
+          # Ensure the format script is executable and works
+          chmod +x scripts/format-fix.sh
+
+          # Create a test file with formatting issues
+          echo -e "test file with trailing spaces  \nno final newline" > test.txt
+
+          # Run the format script
+          ./scripts/format-fix.sh test.txt
+
+          # Check that formatting was applied
+          if grep -q "  $" test.txt; then
+            echo "❌ Format script did not remove trailing spaces"
+            exit 1
+          fi
+
+          if [ "$(tail -c 1 test.txt | wc -l)" -ne 1 ]; then
+            echo "❌ Format script did not add final newline"
+            exit 1
+          fi
+
+          echo "✅ Format script works correctly"
+          rm test.txt
