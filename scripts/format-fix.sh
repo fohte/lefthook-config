@@ -9,17 +9,18 @@ set -euo pipefail
 process_file() {
   local file="$1"
 
-  # Skip if file doesn't exist
+  # Skip if file doesn't exist (e.g., it was deleted in the commit)
   if [ ! -f "$file" ]; then
-    echo "ERROR: File not found: $file" >&2
-    return 1
+    return 0
   fi
 
-  # Create temporary file
+  # Create temporary file and ensure it's cleaned up
+  local temp_file
   temp_file=$(mktemp)
+  trap "rm -f '$temp_file'" RETURN
 
   # Remove trailing whitespace and normalize to single trailing newline
-  awk '
+  if ! awk '
     { sub(/[[:space:]]+$/, ""); lines[NR] = $0 }
     END {
       # Find last non-empty line
@@ -34,11 +35,15 @@ process_file() {
         print lines[i]
       }
     }
-  ' "$file" > "$temp_file"
+  ' "$file" > "$temp_file"; then
+    echo "ERROR: awk failed to process '$file'" >&2
+    return 1
+  fi
 
-  # Write back to original file
-  cat "$temp_file" > "$file"
-  rm -f "$temp_file"
+  # Only write back to original file if content has changed
+  if ! cmp -s "$file" "$temp_file"; then
+    cat "$temp_file" > "$file"
+  fi
 }
 
 # Main
