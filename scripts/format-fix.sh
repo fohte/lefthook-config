@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Simple formatting script
 # - Removes trailing whitespace from lines
-# - Ensures files end with a single newline
+# - Ensures files end with exactly one newline
 
 set -euo pipefail
 
@@ -15,17 +15,27 @@ process_file() {
     return 1
   fi
 
-  # Remove trailing whitespace from all lines (portable approach)
+  # Create temporary file
   temp_file=$(mktemp)
-  sed 's/[[:space:]]*$//' "$file" > "$temp_file" && mv "$temp_file" "$file"
 
-  # Ensure file ends with exactly one newline
-  if [ -s "$file" ]; then
-    # Add newline if file doesn't end with one
-    if [ "$(tail -c1 "$file" | wc -l)" -eq 0 ]; then
-      echo "" >> "$file"
-    fi
-  fi
+  # Remove trailing whitespace and normalize to single trailing newline
+  # awk is more portable and handles this cleanly
+  awk '
+    { sub(/[[:space:]]+$/, ""); lines[NR] = $0 }
+    END {
+      # Find last non-empty line
+      for (i = NR; i > 0; i--) {
+        if (lines[i] != "") {
+          last = i
+          break
+        }
+      }
+      # Print all lines up to last non-empty
+      for (i = 1; i <= last; i++) {
+        print lines[i]
+      }
+    }
+  ' "$file" > "$temp_file" && mv "$temp_file" "$file"
 }
 
 # Main
