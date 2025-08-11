@@ -15,8 +15,9 @@ process_file() {
     return 1
   fi
 
-  # Remove trailing whitespace from all lines
-  sed -i.bak 's/[[:space:]]*$//' "$file" && rm -f "$file.bak"
+  # Remove trailing whitespace from all lines (portable approach)
+  temp_file=$(mktemp)
+  sed 's/[[:space:]]*$//' "$file" > "$temp_file" && mv "$temp_file" "$file"
 
   # Ensure file ends with exactly one newline
   if [ -s "$file" ]; then
