@@ -19,7 +19,6 @@ process_file() {
   temp_file=$(mktemp)
 
   # Remove trailing whitespace and normalize to single trailing newline
-  # awk is more portable and handles this cleanly
   awk '
     { sub(/[[:space:]]+$/, ""); lines[NR] = $0 }
     END {
