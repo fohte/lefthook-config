@@ -4,4 +4,10 @@
 extends:
   - base.yml
 
-# Additional hooks specific to this repository can be added here
+# Additional hooks specific to this repository
+pre-commit:
+  commands:
+    format:
+      exclude: |
+        *.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}
+        tests/fixtures/**
