@@ -8,6 +8,6 @@ extends:
 pre-commit:
   commands:
     format:
-      exclude: |
-        *.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}
-        tests/fixtures/**
+      exclude:
+        - "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
+        - "tests/fixtures/**"
