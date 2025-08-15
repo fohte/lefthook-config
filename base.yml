@@ -10,14 +10,11 @@ pre-commit:
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
 
     shfmt:
-      # Format shell scripts (both with and without extensions)
+      # Format shell scripts (detected by file command)
       run: |
         for f in {staged_files}; do
-          # Check if file has .sh or .bash extension
-          if [[ "$f" == *.sh ]] || [[ "$f" == *.bash ]]; then
-            shfmt -w "$f" && git add "$f"
-          # Check if file without extension has shell shebang
-          elif [[ ! "$f" == *.* ]] && head -n1 "$f" 2>/dev/null | grep -q '^#!/.*\(bash\|sh\)'; then
+          # Use file command for accurate detection
+          if file --mime-type "$f" 2>/dev/null | grep -q 'text/x-shellscript'; then
             shfmt -w "$f" && git add "$f"
           fi
         done
@@ -25,14 +22,11 @@ pre-commit:
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
 
     shellcheck:
-      # Lint shell scripts (both with and without extensions)
+      # Lint shell scripts (detected by file command)
       run: |
         for f in {staged_files}; do
-          # Check if file has .sh or .bash extension
-          if [[ "$f" == *.sh ]] || [[ "$f" == *.bash ]]; then
-            shellcheck "$f"
-          # Check if file without extension has shell shebang
-          elif [[ ! "$f" == *.* ]] && head -n1 "$f" 2>/dev/null | grep -q '^#!/.*\(bash\|sh\)'; then
+          # Use file command for accurate detection
+          if file --mime-type "$f" 2>/dev/null | grep -q 'text/x-shellscript'; then
             shellcheck "$f"
           fi
         done
