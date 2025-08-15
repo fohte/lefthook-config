@@ -4,10 +4,5 @@
 extends:
   - base.yml
 
-# Additional hooks specific to this repository
-pre-commit:
-  commands:
-    format:
-      exclude:
-        - "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
-        - "tests/fixtures/**"
+templates:
+  format-ignore: tests/fixtures/**

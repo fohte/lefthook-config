@@ -141,3 +141,39 @@ teardown() {
     # File should be empty now
     [ ! -s "$TEST_TEMP_DIR/whitespace.txt" ]
 }
+
+@test "ignores files matching --ignore pattern" {
+    # Create test files with trailing spaces
+    mkdir -p "$TEST_TEMP_DIR/fixtures"
+    printf "line with spaces  \n" > "$TEST_TEMP_DIR/fixtures/ignored.txt"
+    printf "line with spaces  \n" > "$TEST_TEMP_DIR/processed.txt"
+
+    # Run format-fix with ignore pattern
+    run format-fix.sh --ignore "$TEST_TEMP_DIR/fixtures/**" "$TEST_TEMP_DIR/fixtures/ignored.txt" "$TEST_TEMP_DIR/processed.txt"
+    [ "$status" -eq 0 ]
+
+    # Check that ignored file still has trailing spaces
+    grep -q "  $" "$TEST_TEMP_DIR/fixtures/ignored.txt"
+
+    # Check that processed file has no trailing spaces
+    ! grep -q "  $" "$TEST_TEMP_DIR/processed.txt"
+}
+
+@test "handles --ignore with no matching files" {
+    # Create test file
+    printf "line with spaces  \n" > "$TEST_TEMP_DIR/test.txt"
+
+    # Run format-fix with ignore pattern that doesn't match
+    run format-fix.sh --ignore "nonexistent/**" "$TEST_TEMP_DIR/test.txt"
+    [ "$status" -eq 0 ]
+
+    # Check that file was processed (no trailing spaces)
+    ! grep -q "  $" "$TEST_TEMP_DIR/test.txt"
+}
+
+@test "requires pattern argument for --ignore option" {
+    # Run format-fix with --ignore but no pattern
+    run format-fix.sh --ignore
+    [ "$status" -eq 1 ]
+    [[ "$output" =~ "Error: --ignore requires a pattern argument" ]]
+}
