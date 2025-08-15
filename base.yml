@@ -10,33 +10,19 @@ pre-commit:
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
 
     shfmt:
-      # Format shell scripts with shfmt
-      run: shfmt -w {staged_files} && git add {staged_files}
-      glob: "*.{sh,bash}"
-
-    shfmt-no-ext:
-      # Format shell scripts without extension (with shebang)
+      # Format shell scripts (detected by file command)
       run: |
-        for f in {staged_files}; do
-          if head -n1 "$f" 2>/dev/null | grep -q '^#!/.*\(bash\|sh\)'; then
-            shfmt -w "$f" && git add "$f"
-          fi
-        done
+        printf '%s\n' {staged_files} | \
+        xargs -I {} sh -c 'file --mime-type "{}" | grep -q "text/x-shellscript" && echo "{}"' | \
+        xargs sh -c 'if [ $# -gt 0 ]; then shfmt -w "$@" && git add "$@"; fi' _
       glob: "*"
-      exclude: "*.*"
+      exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
 
     shellcheck:
-      # Lint shell scripts with shellcheck
-      run: shellcheck {staged_files}
-      glob: "*.{sh,bash}"
-
-    shellcheck-no-ext:
-      # Lint shell scripts without extension (with shebang)
+      # Lint shell scripts (detected by file command)
       run: |
-        for f in {staged_files}; do
-          if head -n1 "$f" 2>/dev/null | grep -q '^#!/.*\(bash\|sh\)'; then
-            shellcheck "$f"
-          fi
-        done
+        printf '%s\n' {staged_files} | \
+        xargs -I {} sh -c 'file --mime-type "{}" | grep -q "text/x-shellscript" && echo "{}"' | \
+        xargs sh -c 'if [ $# -gt 0 ]; then shellcheck "$@"; fi' _
       glob: "*"
-      exclude: "*.*"
+      exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"

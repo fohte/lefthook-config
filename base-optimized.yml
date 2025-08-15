@@ -1,0 +1,41 @@
+# Base configuration for language-agnostic hooks
+# These hooks can be used across any project regardless of programming language
+
+pre-commit:
+  commands:
+    format:
+      # Simple formatting fixes: remove trailing whitespace and ensure final newline
+      run: ./scripts/format-fix.sh {staged_files} && git add {staged_files}
+      glob: "*"
+      exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
+
+    shfmt:
+      # Format shell scripts (optimized with single file call)
+      run: |
+        # Collect all shell scripts in one go
+        shell_files=""
+        for f in {staged_files}; do
+          if file --mime-type "$f" 2>/dev/null | grep -q 'text/x-shellscript'; then
+            shell_files="$shell_files $f"
+          fi
+        done
+        # Format all at once if any found
+        if [ -n "$shell_files" ]; then
+          shfmt -w $shell_files && git add $shell_files
+        fi
+      glob: "*"
+      exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
+
+    shellcheck:
+      # Lint shell scripts (with severity options)
+      run: |
+        has_error=0
+        for f in {staged_files}; do
+          if file --mime-type "$f" 2>/dev/null | grep -q 'text/x-shellscript'; then
+            # Run shellcheck with appropriate options
+            shellcheck -S warning "$f" || has_error=1
+          fi
+        done
+        exit $has_error
+      glob: "*"
+      exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
