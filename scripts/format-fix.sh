@@ -5,12 +5,38 @@
 
 set -euo pipefail
 
+# Global variable for ignore pattern
+IGNORE_PATTERN=""
+
+# Check if file matches ignore pattern
+should_ignore() {
+  local file="$1"
+
+  # If no ignore pattern, don't ignore
+  if [ -z "$IGNORE_PATTERN" ]; then
+    return 1
+  fi
+
+  # Check if file matches the glob pattern
+  # Using bash's [[ ]] with == for pattern matching
+  if [[ "$file" == $IGNORE_PATTERN ]]; then
+    return 0
+  fi
+
+  return 1
+}
+
 # Process a single file
 process_file() {
   local file="$1"
 
   # Skip if file doesn't exist (e.g., it was deleted in the commit)
   if [ ! -f "$file" ]; then
+    return 0
+  fi
+
+  # Skip if file matches ignore pattern
+  if should_ignore "$file"; then
     return 0
   fi
 
@@ -49,13 +75,44 @@ process_file() {
 
 # Main
 main() {
-  if [ $# -eq 0 ]; then
-    echo "Usage: $0 FILE..."
+  local files=()
+
+  # Parse command line arguments
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --ignore)
+        if [ $# -lt 2 ]; then
+          echo "Error: --ignore requires a pattern argument" >&2
+          exit 1
+        fi
+        IGNORE_PATTERN="$2"
+        shift 2
+        ;;
+      -*)
+        echo "Unknown option: $1" >&2
+        echo "Usage: $0 [--ignore PATTERN] FILE..."
+        echo "Fix formatting: remove trailing whitespace and ensure final newline"
+        exit 1
+        ;;
+      *)
+        files+=("$1")
+        shift
+        ;;
+    esac
+  done
+
+  # Check if we have files to process
+  if [ ${#files[@]} -eq 0 ]; then
+    echo "Usage: $0 [--ignore PATTERN] FILE..."
     echo "Fix formatting: remove trailing whitespace and ensure final newline"
+    echo ""
+    echo "Options:"
+    echo "  --ignore PATTERN    Glob pattern for files to ignore (e.g., 'tests/fixtures/**')"
     exit 1
   fi
 
-  for file in "$@"; do
+  # Process each file
+  for file in "${files[@]}"; do
     process_file "$file"
   done
 }

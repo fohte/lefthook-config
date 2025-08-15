@@ -5,6 +5,6 @@ pre-commit:
   commands:
     format:
       # Simple formatting fixes: remove trailing whitespace and ensure final newline
-      run: ./scripts/format-fix.sh {staged_files} && git add {staged_files}
+      run: ./scripts/format-fix.sh --ignore '{format-ignore}' {staged_files} && git add {staged_files}
       glob: "*"
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
