@@ -12,12 +12,9 @@ pre-commit:
     shfmt:
       # Format shell scripts (detected by file command)
       run: |
-        for f in {staged_files}; do
-          # Use file command for accurate detection
-          if file --mime-type "$f" 2>/dev/null | grep -q 'text/x-shellscript'; then
-            shfmt -w "$f" && git add "$f"
-          fi
-        done
+        printf '%s\n' {staged_files} | \
+        xargs -I {} sh -c 'file --mime-type "{}" | grep -q "text/x-shellscript" && echo "{}"' | \
+        xargs sh -c 'if [ $# -gt 0 ]; then shfmt -w "$@" && git add "$@"; fi' _
       glob: "*"
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
 
