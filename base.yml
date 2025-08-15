@@ -10,20 +10,19 @@ pre-commit:
       exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
 
     shfmt:
-      # Format shell scripts with shfmt
-      run: shfmt -w {staged_files} && git add {staged_files}
-      glob: "*.{sh,bash}"
-
-    shfmt-no-ext:
-      # Format shell scripts without extension (with shebang)
+      # Format shell scripts (both with and without extensions)
       run: |
         for f in {staged_files}; do
-          if head -n1 "$f" 2>/dev/null | grep -q '^#!/.*\(bash\|sh\)'; then
+          # Check if file has .sh or .bash extension
+          if [[ "$f" == *.sh ]] || [[ "$f" == *.bash ]]; then
+            shfmt -w "$f" && git add "$f"
+          # Check if file without extension has shell shebang
+          elif [[ ! "$f" == *.* ]] && head -n1 "$f" 2>/dev/null | grep -q '^#!/.*\(bash\|sh\)'; then
             shfmt -w "$f" && git add "$f"
           fi
         done
       glob: "*"
-      exclude: "*.*"
+      exclude: "*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}"
 
     shellcheck:
       # Lint shell scripts with shellcheck
