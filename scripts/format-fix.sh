@@ -5,6 +5,11 @@
 
 set -euo pipefail
 
+# Enable extended globbing for pattern matching
+shopt -s extglob
+# Enable ** to match zero or more directories
+shopt -s globstar
+
 # Global variable for ignore pattern
 IGNORE_PATTERN=""
 
@@ -18,7 +23,7 @@ should_ignore() {
   fi
 
   # Check if file matches the glob pattern
-  # Using bash's [[ ]] with == for pattern matching
+  # Using bash's [[ ]] with == for pattern matching with globstar enabled
   if [[ "$file" == $IGNORE_PATTERN ]]; then
     return 0
   fi
