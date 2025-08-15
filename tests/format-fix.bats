@@ -58,7 +58,7 @@ teardown() {
 
     # Get original checksum
     local original_checksum
-    original_checksum=$(md5sum "$TEST_TEMP_DIR/test.txt")
+    original_checksum=$(shasum "$TEST_TEMP_DIR/test.txt")
 
     # Run format-fix
     run format-fix.sh "$TEST_TEMP_DIR/test.txt"
@@ -66,7 +66,7 @@ teardown() {
 
     # Check file unchanged
     local new_checksum
-    new_checksum=$(md5sum "$TEST_TEMP_DIR/test.txt")
+    new_checksum=$(shasum "$TEST_TEMP_DIR/test.txt")
     [ "$original_checksum" = "$new_checksum" ]
 }
 
@@ -176,4 +176,44 @@ teardown() {
     run format-fix.sh --ignore
     [ "$status" -eq 1 ]
     [[ "$output" =~ "Error: --ignore requires a pattern argument" ]]
+}
+
+@test "supports comma-separated ignore patterns" {
+    # Create test files with different extensions
+    mkdir -p "$TEST_TEMP_DIR/src"
+    printf "line with spaces  \n" > "$TEST_TEMP_DIR/src/file.js"
+    printf "line with spaces  \n" > "$TEST_TEMP_DIR/src/file.ts"
+    printf "line with spaces  \n" > "$TEST_TEMP_DIR/src/file.py"
+
+    # Run format-fix with comma-separated ignore patterns
+    run format-fix.sh --ignore "$TEST_TEMP_DIR/src/*.js,$TEST_TEMP_DIR/src/*.ts" \
+        "$TEST_TEMP_DIR/src/file.js" "$TEST_TEMP_DIR/src/file.ts" "$TEST_TEMP_DIR/src/file.py"
+    [ "$status" -eq 0 ]
+
+    # Check that .js and .ts files still have trailing spaces (ignored)
+    grep -q "  $" "$TEST_TEMP_DIR/src/file.js"
+    grep -q "  $" "$TEST_TEMP_DIR/src/file.ts"
+
+    # Check that .py file has no trailing spaces (processed)
+    ! grep -q "  $" "$TEST_TEMP_DIR/src/file.py"
+}
+
+@test "handles comma-separated patterns with spaces" {
+    # Create test files
+    mkdir -p "$TEST_TEMP_DIR/test"
+    printf "line with spaces  \n" > "$TEST_TEMP_DIR/test/file1.txt"
+    printf "line with spaces  \n" > "$TEST_TEMP_DIR/test/file2.txt"
+    printf "line with spaces  \n" > "$TEST_TEMP_DIR/test/file3.txt"
+
+    # Run format-fix with comma-separated patterns with spaces
+    run format-fix.sh --ignore "$TEST_TEMP_DIR/test/file1.txt , $TEST_TEMP_DIR/test/file2.txt" \
+        "$TEST_TEMP_DIR/test/file1.txt" "$TEST_TEMP_DIR/test/file2.txt" "$TEST_TEMP_DIR/test/file3.txt"
+    [ "$status" -eq 0 ]
+
+    # Check that file1.txt and file2.txt still have trailing spaces (ignored)
+    grep -q "  $" "$TEST_TEMP_DIR/test/file1.txt"
+    grep -q "  $" "$TEST_TEMP_DIR/test/file2.txt"
+
+    # Check that file3.txt has no trailing spaces (processed)
+    ! grep -q "  $" "$TEST_TEMP_DIR/test/file3.txt"
 }
