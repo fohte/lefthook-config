@@ -4,4 +4,5 @@
 extends:
   - base.yml
 
-# Additional hooks specific to this repository can be added here
+templates:
+  format-ignore: tests/fixtures/**

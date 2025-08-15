@@ -1,0 +1,5 @@
+This line has trailing spaces
+This line also has tabs
+This line is clean
+This has mixed spaces and tabs
+Last line without newline
