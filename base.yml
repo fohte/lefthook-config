@@ -14,7 +14,29 @@ pre-commit:
       run: shfmt -w {staged_files} && git add {staged_files}
       glob: "*.{sh,bash}"
 
+    shfmt-no-ext:
+      # Format shell scripts without extension (with shebang)
+      run: |
+        for f in {staged_files}; do
+          if head -n1 "$f" 2>/dev/null | grep -q '^#!/.*\(bash\|sh\)'; then
+            shfmt -w "$f" && git add "$f"
+          fi
+        done
+      glob: "*"
+      exclude: "*.*"
+
     shellcheck:
       # Lint shell scripts with shellcheck
       run: shellcheck {staged_files}
       glob: "*.{sh,bash}"
+
+    shellcheck-no-ext:
+      # Lint shell scripts without extension (with shebang)
+      run: |
+        for f in {staged_files}; do
+          if head -n1 "$f" 2>/dev/null | grep -q '^#!/.*\(bash\|sh\)'; then
+            shellcheck "$f"
+          fi
+        done
+      glob: "*"
+      exclude: "*.*"
