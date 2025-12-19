@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/fohte/lefthook-config/compare/v0.1.4...v0.1.5) (2025-12-19)
+
+
+### Features
+
+* Add actionlint to pre-commit hook ([#19](https://github.com/fohte/lefthook-config/issues/19)) ([5f1aba7](https://github.com/fohte/lefthook-config/commit/5f1aba7d74f3386a7bea0cc6d77b61ef7c23d95b))
+
 ## [0.1.4](https://github.com/fohte/lefthook-config/compare/v0.1.3...v0.1.4) (2025-12-19)
 
 
