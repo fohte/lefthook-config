@@ -8,5 +8,9 @@ pre-commit:
       run: basefmt {staged_files} && git add {staged_files}
       glob: '*'
     prettier:
-      glob: '*.{js,jsx,ts,tsx,json,md,yml,yaml,css,scss,html}'
-      run: mise x -- prettier --write {staged_files} && git add {staged_files}
+      run: |
+        if [ -f package.json ]; then
+          npx prettier --write --ignore-unknown {staged_files}
+        else
+          mise x -- prettier --write --ignore-unknown {staged_files}
+        fi && git add {staged_files}
