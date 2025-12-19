@@ -7,6 +7,7 @@ pre-commit:
       # Simple formatting fixes: remove trailing whitespace and ensure final newline
       run: basefmt {staged_files} && git add {staged_files}
       glob: '*'
+
     prettier:
       run: |
         if [ -f bun.lockb ] || [ -f bun.lock ]; then
@@ -18,3 +19,11 @@ pre-commit:
         else
           mise x -- prettier --write --ignore-unknown {staged_files}
         fi && git add {staged_files}
+
+    shellcheck:
+      files: git diff --cached --name-only --diff-filter=ACMR | xargs file | grep -E 'shell|bash' | cut -d':' -f1
+      run: mise x shellcheck -- shellcheck {files}
+
+    shfmt:
+      files: git diff --cached --name-only --diff-filter=ACMR | xargs file | grep -E 'shell|bash' | cut -d':' -f1
+      run: mise x shfmt -- shfmt -w {files} && git add {files}
