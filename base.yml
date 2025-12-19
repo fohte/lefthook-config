@@ -9,9 +9,9 @@ pre-commit:
       glob: "*"
 
     shellcheck:
-      files: git diff --cached --name-only --diff-filter=ACMR | xargs file | grep -E 'shell|bash' | cut -d':' -f1
-      run: mise x shellcheck -- shellcheck {files}
+      files: &shell-files git diff --cached --name-only -z --diff-filter=ACMR | xargs -0 file --separator '%%' | grep -E '%%.*(shell|bash)' | sed 's/%%.*//'
+      run: mise x shellcheck -- shellcheck '{files}'
 
     shfmt:
-      files: git diff --cached --name-only --diff-filter=ACMR | xargs file | grep -E 'shell|bash' | cut -d':' -f1
-      run: mise x shfmt -- shfmt -w {files} && git add {files}
+      files: *shell-files
+      run: mise x shfmt -- shfmt -w '{files}' && git add '{files}'
