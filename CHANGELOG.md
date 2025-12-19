@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.3](https://github.com/fohte/lefthook-config/compare/v0.1.2...v0.1.3) (2025-12-19)
+
+
+### Features
+
+* Add prettier pre-commit hook ([#14](https://github.com/fohte/lefthook-config/issues/14)) ([8710f55](https://github.com/fohte/lefthook-config/commit/8710f554c776e8b1fd9f67af097cfec90d16a95c))
+* Add shellcheck and shfmt pre-commit hooks ([#11](https://github.com/fohte/lefthook-config/issues/11)) ([c7d88d9](https://github.com/fohte/lefthook-config/commit/c7d88d9d6c4413654c3a8b652f34b57868c2f5d9))
+
+
+### Bug Fixes
+
+* Handle filenames with spaces and colons in shell detection ([#13](https://github.com/fohte/lefthook-config/issues/13)) ([1e0355a](https://github.com/fohte/lefthook-config/commit/1e0355aee5eca9e2ac38dafbac0bd37f9a6af751))
+
 ## [0.1.2](https://github.com/fohte/lefthook-config/compare/v0.1.1...v0.1.2) (2025-12-19)
 
 
