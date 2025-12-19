@@ -7,7 +7,14 @@
 1. Install lefthook globally:
 
 ```bash
+# Using mise (global)
 mise use -g lefthook --pin
+
+# or using Homebrew
+brew install lefthook
+
+# or using npm
+npm install -g lefthook
 ```
 
 2. Create `lefthook.yml` in your repository:
