@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/fohte/lefthook-config/compare/v0.1.3...v0.1.4) (2025-12-19)
+
+
+### Bug Fixes
+
+* Fix shellcheck/shfmt running on non-shell files ([#17](https://github.com/fohte/lefthook-config/issues/17)) ([055f0f2](https://github.com/fohte/lefthook-config/commit/055f0f27d9ef6cce76456e22a3fa0935b817f544))
+
 ## [0.1.3](https://github.com/fohte/lefthook-config/compare/v0.1.2...v0.1.3) (2025-12-19)
 
 
