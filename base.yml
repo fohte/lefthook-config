@@ -9,7 +9,11 @@ pre-commit:
       glob: '*'
     prettier:
       run: |
-        if [ -f package.json ]; then
+        if [ -f bun.lockb ] || [ -f bun.lock ]; then
+          bun x prettier --write --ignore-unknown {staged_files}
+        elif [ -f pnpm-lock.yaml ]; then
+          pnpm exec prettier --write --ignore-unknown {staged_files}
+        elif [ -f package.json ]; then
           npx prettier --write --ignore-unknown {staged_files}
         else
           mise x -- prettier --write --ignore-unknown {staged_files}

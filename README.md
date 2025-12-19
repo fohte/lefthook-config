@@ -41,5 +41,5 @@ lefthook install
   - Ensures final newline
   - Excludes: `*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}`
 - **pre-commit/prettier**: Prettier formatting
-  - Uses npx if `package.json` exists, otherwise uses mise
-  - Requires `prettier` available via npm or mise
+  - Auto-detects package manager: bun, pnpm, npm, or falls back to mise
+  - Requires `prettier` available via package manager or mise
