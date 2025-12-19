@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/fohte/lefthook-config/compare/v0.1.1...v0.1.2) (2025-12-19)
+
+
+### Features
+
+* Replace format-fix.sh with basefmt ([#9](https://github.com/fohte/lefthook-config/issues/9)) ([2b67280](https://github.com/fohte/lefthook-config/commit/2b67280f2b39ffaccbf6648478d689982254e43b))
+
 ## [0.1.1](https://github.com/fohte/lefthook-config/compare/v0.1.0...v0.1.1) (2025-12-19)
 
 
