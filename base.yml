@@ -30,3 +30,7 @@ pre-commit:
       file_types:
         - text/x-shellscript
       run: mise x shfmt -- shfmt -w {staged_files} && git add {staged_files}
+
+    actionlint:
+      glob: '.github/workflows/*.{yml,yaml}'
+      run: mise x actionlint -- actionlint {staged_files}

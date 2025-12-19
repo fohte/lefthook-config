@@ -53,9 +53,10 @@ Language-agnostic hooks that can be used across any project regardless of progra
 
 #### `pre-commit`
 
-| Hook         | Description                                      | Requirements                                         |
-| ------------ | ------------------------------------------------ | ---------------------------------------------------- |
-| `format`     | Remove trailing whitespace, ensure final newline | [basefmt](https://github.com/fohte/basefmt) (mise)   |
-| `prettier`   | Auto-format with Prettier                        | [Prettier](https://prettier.io/) (bun/pnpm/npm/mise) |
-| `shellcheck` | Lint shell scripts                               | [ShellCheck](https://www.shellcheck.net/) (mise)     |
-| `shfmt`      | Format shell scripts                             | [shfmt](https://github.com/mvdan/sh) (mise)          |
+| Hook         | Description                                      | Requirements                                             |
+| ------------ | ------------------------------------------------ | -------------------------------------------------------- |
+| `format`     | Remove trailing whitespace, ensure final newline | [basefmt](https://github.com/fohte/basefmt) (mise)       |
+| `prettier`   | Auto-format with Prettier                        | [Prettier](https://prettier.io/) (bun/pnpm/npm/mise)     |
+| `shellcheck` | Lint shell scripts                               | [ShellCheck](https://www.shellcheck.net/) (mise)         |
+| `shfmt`      | Format shell scripts                             | [shfmt](https://github.com/mvdan/sh) (mise)              |
+| `actionlint` | Lint GitHub Actions workflow files               | [actionlint](https://github.com/rhysd/actionlint) (mise) |
