@@ -6,7 +6,20 @@ pre-commit:
     format:
       # Simple formatting fixes: remove trailing whitespace and ensure final newline
       run: basefmt {staged_files} && git add {staged_files}
-      glob: "*"
+      glob: '*'
+
+    prettier:
+      run: |
+        if [ -f bun.lockb ] || [ -f bun.lock ]; then
+          runner="bun x"
+        elif [ -f pnpm-lock.yaml ]; then
+          runner="pnpm exec"
+        elif [ -f package.json ]; then
+          runner="npx"
+        else
+          runner="mise x --"
+        fi
+        $runner prettier --write --ignore-unknown {staged_files} && git add {staged_files}
 
     shellcheck:
       files: &shell-files git diff --cached --name-only -z --diff-filter=ACMR | xargs -0 file --separator '%%' | grep -E '%%.*(shell|bash)' | sed 's/%%.*//'
