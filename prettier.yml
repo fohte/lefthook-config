@@ -1,0 +1,8 @@
+# Prettier configuration for pre-commit formatting
+# Usage: Add 'extends: - https://raw.githubusercontent.com/fohte/lefthook-config/master/prettier.yml' to your lefthook.yml
+
+pre-commit:
+  commands:
+    prettier:
+      glob: '*.{js,jsx,ts,tsx,json,md,yml,yaml,css,scss,html}'
+      run: mise x -- prettier --write {staged_files} && git add {staged_files}
