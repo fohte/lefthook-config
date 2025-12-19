@@ -3,6 +3,5 @@
 
 extends:
   - base.yml
-  - prettier.yml
 
 # Additional hooks specific to this repository can be added here

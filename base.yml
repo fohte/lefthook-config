@@ -6,4 +6,7 @@ pre-commit:
     format:
       # Simple formatting fixes: remove trailing whitespace and ensure final newline
       run: basefmt {staged_files} && git add {staged_files}
-      glob: "*"
+      glob: '*'
+    prettier:
+      glob: '*.{js,jsx,ts,tsx,json,md,yml,yaml,css,scss,html}'
+      run: mise x -- prettier --write {staged_files} && git add {staged_files}
