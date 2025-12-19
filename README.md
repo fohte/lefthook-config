@@ -5,6 +5,7 @@
 ## Usage
 
 1. Install lefthook globally:
+
 ```bash
 # Using mise (global)
 mise use -g lefthook --pin
@@ -17,6 +18,7 @@ npm install -g lefthook
 ```
 
 2. Create `lefthook.yml` in your repository:
+
 ```yaml
 remotes:
   - git_url: https://github.com/fohte/lefthook-config
@@ -25,6 +27,7 @@ remotes:
 ```
 
 3. Install git hooks:
+
 ```bash
 lefthook install
 ```
@@ -32,7 +35,11 @@ lefthook install
 ## Available configurations
 
 ### base.yml
+
 - **pre-commit/format**: Automatic code formatting
   - Removes trailing whitespace
   - Ensures final newline
   - Excludes: `*.{png,jpg,jpeg,gif,ico,pdf,svg,woff,woff2,ttf,eot}`
+- **pre-commit/prettier**: Prettier formatting
+  - Uses npx if `package.json` exists, otherwise uses mise
+  - Requires `prettier` available via npm or mise
