@@ -11,14 +11,15 @@ pre-commit:
     prettier:
       run: |
         if [ -f bun.lockb ] || [ -f bun.lock ]; then
-          bun x prettier --write --ignore-unknown {staged_files}
+          runner="bun x"
         elif [ -f pnpm-lock.yaml ]; then
-          pnpm exec prettier --write --ignore-unknown {staged_files}
+          runner="pnpm exec"
         elif [ -f package.json ]; then
-          npx prettier --write --ignore-unknown {staged_files}
+          runner="npx"
         else
-          mise x -- prettier --write --ignore-unknown {staged_files}
-        fi && git add {staged_files}
+          runner="mise x --"
+        fi
+        $runner prettier --write --ignore-unknown {staged_files} && git add {staged_files}
 
     shellcheck:
       files: git diff --cached --name-only --diff-filter=ACMR | xargs file | grep -E 'shell|bash' | cut -d':' -f1
