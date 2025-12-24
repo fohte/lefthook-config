@@ -24,11 +24,15 @@ pre-commit:
     shellcheck:
       file_types:
         - text/x-shellscript
+      exclude:
+        - '*.zsh'
       run: mise x shellcheck -- shellcheck {staged_files}
 
     shfmt:
       file_types:
         - text/x-shellscript
+      exclude:
+        - '*.zsh'
       run: mise x shfmt -- shfmt -w {staged_files} && git add {staged_files}
 
     actionlint:
