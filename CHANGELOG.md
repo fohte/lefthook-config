@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.6](https://github.com/fohte/lefthook-config/compare/v0.1.5...v0.1.6) (2025-12-24)
+
+
+### Bug Fixes
+
+* exclude zsh files from shellcheck and shfmt ([#22](https://github.com/fohte/lefthook-config/issues/22)) ([cba356f](https://github.com/fohte/lefthook-config/commit/cba356f39b7fe2e9e1209e52d7a3920b5b9b6743))
+* **pre-commit:** Fix Prettier error when symlinks are passed ([#21](https://github.com/fohte/lefthook-config/issues/21)) ([c137cc4](https://github.com/fohte/lefthook-config/commit/c137cc4b11c412ef0a7b462f41e1fea905e40452))
+
 ## [0.1.5](https://github.com/fohte/lefthook-config/compare/v0.1.4...v0.1.5) (2025-12-19)
 
 
