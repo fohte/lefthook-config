@@ -19,7 +19,7 @@ pre-commit:
         else
           runner="mise x --"
         fi
-        $runner prettier --write --ignore-unknown {staged_files} && git add {staged_files}
+        $runner prettier --write --ignore-unknown --no-error-on-unmatched-pattern {staged_files} && git add {staged_files}
 
     shellcheck:
       file_types:
