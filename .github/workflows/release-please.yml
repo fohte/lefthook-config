@@ -27,6 +27,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           ref: ${{ fromJSON(steps.release-please.outputs.pr).headBranchName }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Commit README version update
         if: steps.release-please.outputs.prs_created == 'true'
