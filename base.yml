@@ -33,7 +33,7 @@ pre-commit:
         - text/x-shellscript
       exclude:
         - '*.zsh'
-      run: mise x shfmt -- shfmt -w {staged_files} && git add {staged_files}
+      run: mise x shfmt -- shfmt --apply-ignore -w {staged_files} && git add {staged_files}
 
     actionlint:
       glob: '.github/workflows/*.{yml,yaml}'
