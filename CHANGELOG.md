@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.7](https://github.com/fohte/lefthook-config/compare/v0.1.6...v0.1.7) (2025-12-27)
+
+
+### Features
+
+* **shfmt:** add `--apply-ignore` flag ([#25](https://github.com/fohte/lefthook-config/issues/25)) ([86a6c65](https://github.com/fohte/lefthook-config/commit/86a6c65e01e39a29d437d729328456cec0378b92))
+
 ## [0.1.6](https://github.com/fohte/lefthook-config/compare/v0.1.5...v0.1.6) (2025-12-24)
 
 
