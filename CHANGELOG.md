@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.10](https://github.com/fohte/lefthook-config/compare/v0.1.9...v0.1.10) (2025-12-28)
+
+
+### Bug Fixes
+
+* **commit-msg:** support mise for commitlint ([#31](https://github.com/fohte/lefthook-config/issues/31)) ([55e7a11](https://github.com/fohte/lefthook-config/commit/55e7a11c7e6096796b9f2359aa7504c2aa59a902))
+
 ## [0.1.9](https://github.com/fohte/lefthook-config/compare/v0.1.8...v0.1.9) (2025-12-28)
 
 
