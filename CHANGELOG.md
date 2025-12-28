@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.8](https://github.com/fohte/lefthook-config/compare/v0.1.7...v0.1.8) (2025-12-28)
+
+
+### Features
+
+* **copier:** add linter to detect `gh:` prefix in `_src_path` ([#27](https://github.com/fohte/lefthook-config/issues/27)) ([a53424b](https://github.com/fohte/lefthook-config/commit/a53424b89025f163bcb167920f7f2b7a89d7c2b6))
+
 ## [0.1.7](https://github.com/fohte/lefthook-config/compare/v0.1.6...v0.1.7) (2025-12-27)
 
 
