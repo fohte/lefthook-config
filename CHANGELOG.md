@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.9](https://github.com/fohte/lefthook-config/compare/v0.1.8...v0.1.9) (2025-12-28)
+
+
+### Features
+
+* **commit-msg:** add commitlint integration ([#29](https://github.com/fohte/lefthook-config/issues/29)) ([d8fc9f4](https://github.com/fohte/lefthook-config/commit/d8fc9f46c6d7dd2aa54b03e4cee88c0d8257847c))
+
 ## [0.1.8](https://github.com/fohte/lefthook-config/compare/v0.1.7...v0.1.8) (2025-12-28)
 
 
