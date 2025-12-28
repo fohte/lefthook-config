@@ -38,3 +38,21 @@ pre-commit:
     actionlint:
       glob: '.github/workflows/*.{yml,yaml}'
       run: mise x actionlint -- actionlint {staged_files}
+
+    copier-src-path:
+      glob: '.copier-answers.yml'
+      run: |
+        # Check if _src_path uses gh: prefix (not supported by Renovate)
+        # See: https://github.com/renovatebot/renovate/issues/39938
+        for file in {staged_files}; do
+          if [ -f "$file" ]; then
+            src_path=$(grep -E '^_src_path:' "$file" | sed 's/^_src_path:[[:space:]]*//')
+            if echo "$src_path" | grep -qE '^gh:'; then
+              echo "Error: $file uses gh: prefix in _src_path, which is not supported by Renovate."
+              echo "Please use https:// URL instead."
+              echo "  Current: $src_path"
+              echo "  Expected: https://github.com/<owner>/<repo>"
+              exit 1
+            fi
+          fi
+        done
