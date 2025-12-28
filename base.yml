@@ -69,6 +69,6 @@ commit-msg:
         elif [ -f package.json ]; then
           runner="npx"
         else
-          exit 0
+          runner="mise x --"
         fi
         $runner commitlint --edit {1}
