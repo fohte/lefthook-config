@@ -49,10 +49,10 @@ pre-commit:
             # Handle both quoted and unquoted values (e.g., gh:org/repo or "gh:org/repo")
             if grep -qE "^_src_path:[[:space:]]*['\"]?gh:" "$file"; then
               src_path=$(grep -E "^_src_path:" "$file" | head -n 1 | sed 's/^_src_path:[[:space:]]*//')
-              echo "Error: $file uses gh: prefix in _src_path, which is not supported by Renovate." >&2
-              echo "Please use https:// URL instead." >&2
-              echo "  Current: $src_path" >&2
-              echo "  Expected: https://github.com/<owner>/<repo>" >&2
+              suggested_path=$(echo "$src_path" | sed -e "s|^['\"]\\{0,1\\}gh:|https://github.com/|" -e "s|['\"]\\{0,1\\}$||")
+              echo "Error: $file uses 'gh:' prefix in _src_path, which is not supported by Renovate." >&2
+              echo "Please use a full 'https://' URL instead." >&2
+              printf "  Current:   %s\n  Suggested: %s\n" "$src_path" "$suggested_path" >&2
               exit 1
             fi
           fi
