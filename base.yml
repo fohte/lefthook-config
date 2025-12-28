@@ -57,3 +57,18 @@ pre-commit:
             fi
           fi
         done
+
+commit-msg:
+  commands:
+    commitlint:
+      run: |
+        if [ -f bun.lockb ] || [ -f bun.lock ]; then
+          runner="bun x"
+        elif [ -f pnpm-lock.yaml ]; then
+          runner="pnpm exec"
+        elif [ -f package.json ]; then
+          runner="npx"
+        else
+          exit 0
+        fi
+        $runner commitlint --edit {1}
