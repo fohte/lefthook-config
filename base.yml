@@ -59,11 +59,11 @@ pre-commit:
         done
 
     cargo-fmt:
-      glob: '**/*.rs'
+      glob: '*.rs'
       run: cargo fmt -- --check
 
     cargo-clippy:
-      glob: '**/*.rs'
+      glob: '*.rs'
       run: cargo clippy -- -D warnings
 
 commit-msg:
