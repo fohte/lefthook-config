@@ -63,7 +63,7 @@ pre-commit:
     # See: https://github.com/gabriel-vasile/mimetype/blob/master/supported_mimes.md
     cargo-fmt:
       glob: '*.rs'
-      run: cargo fmt -- --check
+      run: rustfmt {staged_files} && git add {staged_files}
 
     cargo-clippy:
       glob: '*.rs'
