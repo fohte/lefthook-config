@@ -1,0 +1,15 @@
+# Lefthook configuration for Rust projects
+# Extends the base configuration for common formatting and linting
+
+extends:
+  - base.yml
+
+pre-commit:
+  commands:
+    cargo-fmt:
+      glob: '*.rs'
+      run: cargo fmt -- --check
+
+    cargo-clippy:
+      glob: '*.rs'
+      run: cargo clippy -- -D warnings
