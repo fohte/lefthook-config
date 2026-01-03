@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.11](https://github.com/fohte/lefthook-config/compare/v0.1.10...v0.1.11) (2026-01-01)
+
+
+### Features
+
+* adopt generic-boilerplate via Copier ([#33](https://github.com/fohte/lefthook-config/issues/33)) ([2df4d1e](https://github.com/fohte/lefthook-config/commit/2df4d1e504a072b38efd5424db773588cc769874))
+* **pre-commit:** add hooks for Rust ([#40](https://github.com/fohte/lefthook-config/issues/40)) ([e506a0c](https://github.com/fohte/lefthook-config/commit/e506a0c693a93b4290990109014b63b79d273328))
+
 ## [0.1.10](https://github.com/fohte/lefthook-config/compare/v0.1.9...v0.1.10) (2025-12-28)
 
 
