@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.12](https://github.com/fohte/lefthook-config/compare/v0.1.11...v0.1.12) (2026-01-21)
+
+
+### Features
+
+* **pre-commit:** extract pre-commit hooks for Rust to rust.yml ([#45](https://github.com/fohte/lefthook-config/issues/45)) ([a4f1047](https://github.com/fohte/lefthook-config/commit/a4f10477d3e0ac9daa1217ae1360d5f97713b243))
+
 ## [0.1.11](https://github.com/fohte/lefthook-config/compare/v0.1.10...v0.1.11) (2026-01-01)
 
 
