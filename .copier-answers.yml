@@ -1,8 +1,9 @@
 # Changes here will be overwritten by Copier
-_commit: v0.1.20
+_commit: v0.1.25
 _src_path: https://github.com/fohte/generic-boilerplate
-description: "@fohte's shared Lefthook configuration"
+description: '@fohte''s shared Lefthook configuration'
 is_public: true
+project_name: lefthook-config
 release_type: simple
 type: base
 use_release_please: true
