@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.13](https://github.com/fohte/lefthook-config/compare/v0.1.12...v0.1.13) (2026-01-24)
+
+
+### Bug Fixes
+
+* **pre-commit/rust:** run clippy on test code ([#47](https://github.com/fohte/lefthook-config/issues/47)) ([7dc7bd3](https://github.com/fohte/lefthook-config/commit/7dc7bd3bbf8a6b76dc28f6fb7ef2b4114fa97e64))
+
 ## [0.1.12](https://github.com/fohte/lefthook-config/compare/v0.1.11...v0.1.12) (2026-01-21)
 
 
