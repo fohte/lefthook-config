@@ -12,4 +12,4 @@ pre-commit:
 
     cargo-clippy:
       glob: '*.rs'
-      run: cargo clippy -- -D warnings
+      run: cargo clippy --all-targets -- -D warnings
