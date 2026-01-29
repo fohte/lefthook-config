@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.14](https://github.com/fohte/lefthook-config/compare/v0.1.13...v0.1.14) (2026-01-29)
+
+
+### Bug Fixes
+
+* **pre-commit:** ensure reliable staging after formatter execution ([#50](https://github.com/fohte/lefthook-config/issues/50)) ([9eb6460](https://github.com/fohte/lefthook-config/commit/9eb64609016862a193e163d1246966f5fc9e6a5f))
+
 ## [0.1.13](https://github.com/fohte/lefthook-config/compare/v0.1.12...v0.1.13) (2026-01-24)
 
 
