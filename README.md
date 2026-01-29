@@ -34,7 +34,7 @@
    ```yaml
    remotes:
      - git_url: https://github.com/fohte/lefthook-config
-       ref: v0.1.13
+       ref: v0.1.14
        configs:
          - base.yml
    ```
