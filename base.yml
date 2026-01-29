@@ -5,8 +5,9 @@ pre-commit:
   commands:
     format:
       # Simple formatting fixes: remove trailing whitespace and ensure final newline
-      run: basefmt {staged_files} && git add {staged_files}
+      run: basefmt {staged_files}
       glob: '*'
+      stage_fixed: true
 
     prettier:
       run: |
@@ -19,7 +20,8 @@ pre-commit:
         else
           runner="mise x --"
         fi
-        $runner prettier --write --ignore-unknown --no-error-on-unmatched-pattern {staged_files} && git add {staged_files}
+        $runner prettier --write --ignore-unknown --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
 
     shellcheck:
       file_types:
@@ -33,7 +35,8 @@ pre-commit:
         - text/x-shellscript
       exclude:
         - '*.zsh'
-      run: mise x shfmt -- shfmt --apply-ignore -w {staged_files} && git add {staged_files}
+      run: mise x shfmt -- shfmt --apply-ignore -w {staged_files}
+      stage_fixed: true
 
     actionlint:
       glob: '.github/workflows/*.{yml,yaml}'
