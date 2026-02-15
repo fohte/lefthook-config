@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.15](https://github.com/fohte/lefthook-config/compare/v0.1.14...v0.1.15) (2026-02-15)
+
+
+### Bug Fixes
+
+* **pre-commit:** use `stage_fixed` in cargo-fmt hook to resolve path mismatch with `root` setting ([#54](https://github.com/fohte/lefthook-config/issues/54)) ([a5ca66f](https://github.com/fohte/lefthook-config/commit/a5ca66fd74978ca4a042d17470718187a8477ec7))
+
 ## [0.1.14](https://github.com/fohte/lefthook-config/compare/v0.1.13...v0.1.14) (2026-01-29)
 
 
