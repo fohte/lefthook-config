@@ -39,7 +39,7 @@ pre-commit:
       stage_fixed: true
 
     pinact:
-      glob: '.github/workflows/*.{yml,yaml}'
+      glob: '{.github/workflows/*.{yml,yaml},.github/actions/**/action.{yml,yaml}}'
       run: mise x pinact -- pinact run {staged_files}
       stage_fixed: true
 
