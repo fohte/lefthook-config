@@ -38,6 +38,11 @@ pre-commit:
       run: mise x shfmt -- shfmt --apply-ignore -w {staged_files}
       stage_fixed: true
 
+    pinact:
+      glob: '{.github/workflows/*.{yml,yaml},.github/actions/**/action.{yml,yaml}}'
+      run: mise x pinact -- pinact run {staged_files}
+      stage_fixed: true
+
     actionlint:
       glob: '.github/workflows/*.{yml,yaml}'
       run: mise x actionlint -- actionlint {staged_files}
