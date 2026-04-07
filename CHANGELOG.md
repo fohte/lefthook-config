@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.16](https://github.com/fohte/lefthook-config/compare/v0.1.15...v0.1.16) (2026-04-07)
+
+
+### Features
+
+* **base:** add `pinact` pre-commit hook for GitHub Actions SHA pinning ([#365](https://github.com/fohte/lefthook-config/issues/365)) ([4d63062](https://github.com/fohte/lefthook-config/commit/4d630623ec8a48274cd39d96bbbb5f82ddab591c))
+
 ## [0.1.15](https://github.com/fohte/lefthook-config/compare/v0.1.14...v0.1.15) (2026-02-15)
 
 
