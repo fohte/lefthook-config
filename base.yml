@@ -11,16 +11,19 @@ pre-commit:
 
     prettier:
       run: |
-        if [ -f bun.lockb ] || [ -f bun.lock ]; then
-          runner="bun x"
-        elif [ -f pnpm-lock.yaml ]; then
-          runner="pnpm exec"
-        elif [ -f package.json ]; then
-          runner="npx"
+        # Prefer the locally installed prettier when the root has a node_modules
+        # (single Node project / pnpm workspace root / npm / bun install). Otherwise
+        # fall back to mise, which generic-boilerplate provisions via `npm:prettier`
+        # for repositories that keep tooling outside of a root node_modules
+        # (e.g. `monorepo_node_workspace: false`).
+        # Avoiding `npx` here is intentional: when the root has a package.json but
+        # no node_modules, npx would fetch prettier from the npm registry on every
+        # commit and can hang for minutes on slow networks.
+        if [ -x node_modules/.bin/prettier ]; then
+          node_modules/.bin/prettier --write --ignore-unknown --no-error-on-unmatched-pattern {staged_files}
         else
-          runner="mise x --"
+          mise x -- prettier --write --ignore-unknown --no-error-on-unmatched-pattern {staged_files}
         fi
-        $runner prettier --write --ignore-unknown --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 
     shellcheck:
@@ -70,13 +73,12 @@ commit-msg:
   commands:
     commitlint:
       run: |
-        if [ -f bun.lockb ] || [ -f bun.lock ]; then
-          runner="bun x"
-        elif [ -f pnpm-lock.yaml ]; then
-          runner="pnpm exec"
-        elif [ -f package.json ]; then
-          runner="npx"
+        # Same rationale as the prettier hook above: prefer the root node_modules
+        # binary, otherwise fall back to mise (generic-boilerplate provisions
+        # `npm:@commitlint/cli` for repos without a root node_modules). Avoid npx
+        # to prevent per-commit registry round-trips that can hang.
+        if [ -x node_modules/.bin/commitlint ]; then
+          node_modules/.bin/commitlint --edit {1}
         else
-          runner="mise x --"
+          mise x -- commitlint --edit {1}
         fi
-        $runner commitlint --edit {1}
