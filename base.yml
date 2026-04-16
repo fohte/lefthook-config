@@ -11,15 +11,33 @@ pre-commit:
 
     prettier:
       run: |
-        if [ -f bun.lockb ] || [ -f bun.lock ]; then
-          runner="bun x"
-        elif [ -f pnpm-lock.yaml ]; then
-          runner="pnpm exec"
-        elif [ -f package.json ]; then
-          runner="npx"
-        else
-          runner="mise x --"
+        # Detect the package manager in priority order:
+        # corepack's packageManager field wins over lockfile detection so that
+        # non-workspace monorepos (root package.json without a root lockfile) still
+        # pick pnpm/bun instead of falling back to npx and hanging on a prompt.
+        pm=""
+        if [ -f package.json ]; then
+          pm=$(grep -E '"packageManager"[[:space:]]*:' package.json \
+            | head -n 1 \
+            | sed -E 's/.*"packageManager"[[:space:]]*:[[:space:]]*"([^"@]+)@[^"]*".*/\1/')
         fi
+        case "$pm" in
+          bun) runner="bun x" ;;
+          pnpm) runner="pnpm exec" ;;
+          yarn) runner="yarn" ;;
+          npm) runner="npx" ;;
+          *)
+            if [ -f bun.lockb ] || [ -f bun.lock ]; then
+              runner="bun x"
+            elif [ -f pnpm-lock.yaml ]; then
+              runner="pnpm exec"
+            elif [ -f package.json ]; then
+              runner="npx"
+            else
+              runner="mise x --"
+            fi
+            ;;
+        esac
         $runner prettier --write --ignore-unknown --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 
@@ -70,13 +88,31 @@ commit-msg:
   commands:
     commitlint:
       run: |
-        if [ -f bun.lockb ] || [ -f bun.lock ]; then
-          runner="bun x"
-        elif [ -f pnpm-lock.yaml ]; then
-          runner="pnpm exec"
-        elif [ -f package.json ]; then
-          runner="npx"
-        else
-          runner="mise x --"
+        # Detect the package manager in priority order:
+        # corepack's packageManager field wins over lockfile detection so that
+        # non-workspace monorepos (root package.json without a root lockfile) still
+        # pick pnpm/bun instead of falling back to npx and hanging on a prompt.
+        pm=""
+        if [ -f package.json ]; then
+          pm=$(grep -E '"packageManager"[[:space:]]*:' package.json \
+            | head -n 1 \
+            | sed -E 's/.*"packageManager"[[:space:]]*:[[:space:]]*"([^"@]+)@[^"]*".*/\1/')
         fi
+        case "$pm" in
+          bun) runner="bun x" ;;
+          pnpm) runner="pnpm exec" ;;
+          yarn) runner="yarn" ;;
+          npm) runner="npx" ;;
+          *)
+            if [ -f bun.lockb ] || [ -f bun.lock ]; then
+              runner="bun x"
+            elif [ -f pnpm-lock.yaml ]; then
+              runner="pnpm exec"
+            elif [ -f package.json ]; then
+              runner="npx"
+            else
+              runner="mise x --"
+            fi
+            ;;
+        esac
         $runner commitlint --edit {1}
