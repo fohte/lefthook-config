@@ -1,12 +1,3 @@
-<<<<<<< before updating
-# Lefthook configuration for this repository
-# Using our own base configuration
-
-extends:
-  - base.yml
-
-# Additional hooks specific to this repository can be added here
-=======
 pre-commit:
   commands:
     format:
@@ -67,4 +58,3 @@ commit-msg:
   commands:
     commitlint:
       run: mise x -- commitlint --edit {1}
->>>>>>> after updating
